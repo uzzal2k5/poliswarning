@@ -1,0 +1,54 @@
+polisPostgresDB:
+  image: uzzal2k5/polisdb:1.0
+  container_name: polisdb
+  hostname: polisdb
+  ports:
+    - 5432:5432/tcp
+  environment:
+    - "POSTGRES_PASSWORD: postgres"
+
+
+polisServer:
+  image: uzzal2k5/polis_server:1.0
+  container_name: polisserver
+  hostname: polisserver
+  ports:
+    - 5000:5000/tcp
+  links:
+    - polisPostgresDB
+
+
+polisClientAdmin:
+  image: uzzal2k5/polis_clientadmin:1.0
+  container_name: clientadmin
+  hostname: cleintadmin
+  ports:
+    - 5002:5002/tcp
+  environment:
+    - "DATABASE_URL: polisdb:5432"
+  links:
+    - polisPostgresDB
+
+
+
+
+polisClientParticipation:
+  image: uzzal2k5/polis_clientparticipation:1.0
+  container_name: clientparticipation
+  hostname: clientparticipation
+  ports:
+    - 8000:8000/tcp
+  links:
+    - polisPostgresDB
+
+
+
+polisMath:
+  image: uzzal2k5/polis_math:1.0
+  container_name: polismath
+  hostname: polismath
+  evnironment:
+    - "DATABASE_URL: polisdb:5432"
+  links:
+    - polisPostgresDB
+
