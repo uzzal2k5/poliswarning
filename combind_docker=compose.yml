@@ -1,0 +1,29 @@
+                                                                                                                                                                                                version: '2'
+services:
+  polisServer:
+    image: polis_server:latest
+    container_name: polisserver
+    ports:
+      - "5000:5000/tcp"
+    depends_on:
+      - polisdb
+    environment:
+      DATABASE_URL: postgres://polis:polis@polisdb/polis
+      STATIC_FILES_HOST: polisClientAdminParticipants
+
+  polisdb:
+    image: uzzal2k5/polis_postgresql:1.0
+    container_name: polisdb
+    ports:
+      - "5432:5432/tcp"
+  polisClientAdminParticipants:
+    image: polisclientadmin:latest
+    container_name: clientadminparticipants
+    environment:
+      SERVICE_URL: polisServer
+    ports:
+      - "8080:8080/tcp"
+      - "5001:5001/tcp"
+      - "5002:5002/tcp"
+
+
