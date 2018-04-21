@@ -22,7 +22,7 @@ services:
     environment:
       SERVICE_URL: polisServer
     ports:
-      - "8080:8080/tcp"
+      - "8000:8000/tcp"
       - "5001:5001/tcp"
       - "5002:5002/tcp"
 
